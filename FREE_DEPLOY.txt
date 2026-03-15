@@ -1,0 +1,81 @@
+╔═══════════════════════════════════════════════════════════╗
+║     🚀 БЕСПЛАТНЫЙ ДЕПЛОЙ - Railway.app (5 минут)        ║
+╚═══════════════════════════════════════════════════════════╝
+
+💰 СТОИМОСТЬ: $0/мес (бесплатно!)
+⏱ ВРЕМЯ: 5 минут
+📍 ХОСТИНГ: Railway.app (облако)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ ПЛАН ИЗ 3 ШАГОВ:
+
+1️⃣ GITHUB (2 минуты)
+   https://github.com/new
+   → Создать репозиторий "claude-trading-bot"
+   
+   cd /Users/alexgreek/Desktop/new-project
+   git init
+   git add .
+   git commit -m "Bot"
+   git branch -M main
+   git remote add origin https://github.com/ВАШ_USERNAME/claude-trading-bot.git
+   git push -u origin main
+
+2️⃣ RAILWAY (2 минуты)
+   https://railway.app
+   → Login with GitHub
+   → New Project → Deploy from GitHub repo
+   → Выбрать "claude-trading-bot"
+   
+3️⃣ ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ (1 минута)
+   В Railway нажать "Variables" → Добавить:
+   
+   TELEGRAM_BOT_TOKEN=8166473987:AAFE3DrNIcd_n39koz-Y70Mq-n96p2N8Vsw
+   TELEGRAM_CHAT_ID=226166473
+   BINANCE_API_KEY=Rsn4sJcuThHwyAl0prGU9x0cgTQXZNBaTJWBjwV0rMTZvUwPfMdvgsAK8Zu8u6bi
+   BINANCE_SECRET_KEY=ctPBcjMqIGiEQOByKenR5y3SjBejdLJ5xNoEwY4G1fimNSsGg5u62DAhIG6Zh4XV
+   ANTHROPIC_API_KEY=your_key_here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ ГОТОВО!
+
+Проверка:
+   • Открыть Telegram
+   • Найти бота
+   • Нажать /start
+   
+Бот отвечает мгновенно! Работает 24/7! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 ФАЙЛЫ ДЛЯ ПОМОЩИ:
+
+   GITHUB_SETUP.md      - Загрузка на GitHub
+   RAILWAY_DEPLOY.md    - Деплой на Railway
+   railway.json         - Конфиг для Railway
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 ПРЕИМУЩЕСТВА RAILWAY:
+
+   ✅ Бесплатно ($0/мес)
+   ✅ 24/7 в облаке
+   ✅ Не нужен сервер
+   ✅ Авто-обновления через Git
+   ✅ Простое управление
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 УПРАВЛЕНИЕ:
+
+   • Логи: Railway Dashboard → Logs
+   • Рестарт: Settings → Restart Deployment
+   • Обновление: git push (автоматически!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ Бот работает даже когда ноутбук выключен!
+
+Вопросы? Смотрите RAILWAY_DEPLOY.md!
