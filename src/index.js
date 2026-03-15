@@ -347,3 +347,4 @@ class ClaudeBot {
 const bot = new ClaudeBot();
 bot.start().catch(console.error);
 // Restart bot
+// Force restart Sun Mar 15 13:22:23 EET 2026
