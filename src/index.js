@@ -346,3 +346,4 @@ class ClaudeBot {
 
 const bot = new ClaudeBot();
 bot.start().catch(console.error);
+// Restart bot
