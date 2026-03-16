@@ -1,35 +1,44 @@
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const http = require('http');
-const express = require('express');
 
-console.log('🚀 Starting Advanced Trading Bot (Webhook Mode)...');
+console.log('🚀 Starting Single Instance Trading Bot...');
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8166473987:AAFE3DrNIcd_n39koz-Y70Mq-n96p2N8Vsw';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '226166473';
 const PORT = process.env.PORT || 3000;
 
-// Express сервер для webhook
-const app = express();
-app.use(express.json());
+// Создаем HTTP сервер для Render
+const server = http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end('Claude Trading Bot - Single Instance 🤖');
+});
 
-let bot;
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ HTTP server listening on port ${PORT}`);
+});
 
-// Инициализация бота
-try {
-  bot = new TelegramBot(TOKEN, {
-    polling: false, // Отключаем polling, используем webhook
-    onlyFirstMatch: true,
-    baseApiUrl: 'https://api.telegram.org'
-  });
+// Инициализируем бота с правильными настройками
+const bot = new TelegramBot(TOKEN, {
+  polling: true,
+  pollingParams: {
+    timeout: 10,
+    interval: 500,
+    autoStart: true
+  }
+});
 
-  console.log('✅ Bot initialized in webhook mode');
-} catch (error) {
-  console.error('❌ Bot initialization error:', error.message);
-  process.exit(1);
-}
+// Останавливаем любой другой polling при старте
+bot.stopPolling().then(() => {
+  console.log('✅ Stopped any other polling instances');
+  return bot.startPolling();
+}).then(() => {
+  console.log('✅ Started single polling instance');
+}).catch(err => {
+  console.error('❌ Polling error:', err.message);
+});
 
-// Данные для ответов
+// Данные
 const balanceData = { usdt: 100.00, btc: 0.00142, eth: 0.0521, totalUsd: 245.50 };
 const positionsData = [
   { symbol: 'BTCUSDT', side: 'LONG', size: 100, leverage: 3, entryPrice: 69500, currentPrice: 70668, pnl: 4.82 },
@@ -55,7 +64,7 @@ bot.on('message', (msg) => {
     let report = `📊 <b>Открытые позиции (${positionsData.length})</b>\n\n`;
     positionsData.forEach((pos) => {
       const emoji = pos.side === 'LONG' ? '🟢' : '🔴';
-      const pnlEmoji = pos.pnl >= 0 ? '��' : '📉';
+      const pnlEmoji = pos.pnl >= 0 ? '📈' : '📉';
       report += `${emoji} <b>${pos.symbol} ${pos.side}</b>\n├ Размер: $${pos.size} × ${pos.leverage}x\n├ Вход: $${pos.entryPrice.toLocaleString()}\n├ Текущая: $${pos.currentPrice.toLocaleString()}\n├ ${pnlEmoji} PnL: +$${pos.pnl.toFixed(2)}\n└ Плечо: ${pos.leverage}x\n\n`;
     });
     bot.sendMessage(chatId, report, { parse_mode: 'HTML' });
@@ -77,37 +86,9 @@ bot.on('message', (msg) => {
   }
 });
 
-// Webhook endpoint для Telegram
-app.post(`/bot${TOKEN}`, (req, res) => {
-  try {
-    bot.processUpdate(req.body);
-    res.sendStatus(200);
-  } catch (error) {
-    console.error('Webhook error:', error.message);
-    res.sendStatus(500);
-  }
+bot.on('polling_error', (error) => {
+  console.error('Polling error (will retry):', error.message);
 });
 
-// Health check endpoint
-app.get('/', (req, res) => {
-  res.send('Claude Trading Bot is running! ��');
-});
-
-// Запуск сервера
-const server = http.createServer(app);
-server.listen(PORT, '0.0.0.0', async () => {
-  console.log(`✅ HTTP server listening on port ${PORT}`);
-  
-  // Устанавливаем webhook после запуска сервера
-  try {
-    const domain = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
-    const webhookUrl = `${domain}/bot${TOKEN}`;
-    
-    await bot.setWebHook(webhookUrl);
-    console.log(`✅ Webhook set to: ${webhookUrl}`);
-  } catch (error) {
-    console.error('❌ Failed to set webhook:', error.message);
-  }
-});
-
-console.log('✅ Advanced Trading Bot started in webhook mode!');
+console.log('✅ Single Instance Bot started!');
+console.log('Token exists:', !!process.env.TELEGRAM_BOT_TOKEN);
