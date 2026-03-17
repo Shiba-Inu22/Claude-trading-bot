@@ -2,11 +2,10 @@
   "name": "claude-trading-bot",
   "version": "1.0.0",
   "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js"
-  },
+  "scripts": { "start": "node src/index.js" },
   "dependencies": {
     "node-telegram-bot-api": "^0.61.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
   }
 }
